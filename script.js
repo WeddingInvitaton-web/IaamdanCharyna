@@ -31,7 +31,7 @@ musicToggle.addEventListener("click", async () => {
       await music.play();
       musicLabel.textContent = "Jeda Musik";
     } catch (error) {
-      musicLabel.textContent = "Tambahkan music.mp3";
+      musicLabel.textContent = "Musik gagal diputar";
     }
   } else {
     music.pause();
