@@ -17,9 +17,11 @@ openButton.addEventListener("click", () => {
   intro.classList.add("is-hidden");
   document.body.classList.remove("locked");
   // Browser biasanya hanya mengizinkan musik setelah ada interaksi pengguna.
-  if (music.querySelector("source") && music.querySelector("source").getAttribute("src") === "music.mp3") {
-    music.play().then(() => { musicLabel.textContent = "Jeda Musik"; }).catch(() => {});
-  }
+ if (music.querySelector("source") && music.querySelector("source").getAttribute("src") === "AvengedSoFarAway.mp3") {
+  music.play().then(() => {
+    musicLabel.textContent = "Jeda Musik";
+  }).catch(() => {});
+}
 });
 document.body.classList.add("locked");
 
