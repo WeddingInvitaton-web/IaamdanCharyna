@@ -13,17 +13,20 @@ const music = document.getElementById("weddingMusic");
 const musicToggle = document.getElementById("musicToggle");
 const musicLabel = document.getElementById("musicLabel");
 
-openButton.addEventListener("click", () => {
+document.body.classList.add("locked");
+
+openButton.addEventListener("click", async () => {
   intro.classList.add("is-hidden");
   document.body.classList.remove("locked");
-  // Browser biasanya hanya mengizinkan musik setelah ada interaksi pengguna.
- if (music.querySelector("source") && music.querySelector("source").getAttribute("src") === "BeautifulInWhite.mp3") {
-  music.play().then(() => {
+
+  try {
+    await music.play();
     musicLabel.textContent = "Jeda Musik";
-  }).catch(() => {});
-}
+  } catch (error) {
+    console.error("Gagal memutar musik:", error);
+    musicLabel.textContent = "Putar Musik";
+  }
 });
-document.body.classList.add("locked");
 
 musicToggle.addEventListener("click", async () => {
   if (music.paused) {
@@ -31,12 +34,17 @@ musicToggle.addEventListener("click", async () => {
       await music.play();
       musicLabel.textContent = "Jeda Musik";
     } catch (error) {
-      musicLabel.textContent = "Musik gagal diputar";
+      console.error("Gagal memutar musik:", error);
+      musicLabel.textContent = "Putar Musik";
     }
   } else {
     music.pause();
     musicLabel.textContent = "Putar Musik";
   }
+});
+
+music.addEventListener("ended", () => {
+  musicLabel.textContent = "Putar Musik";
 });
 
 function updateCountdown() {
