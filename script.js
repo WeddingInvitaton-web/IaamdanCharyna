@@ -17,7 +17,7 @@ openButton.addEventListener("click", () => {
   intro.classList.add("is-hidden");
   document.body.classList.remove("locked");
   // Browser biasanya hanya mengizinkan musik setelah ada interaksi pengguna.
- if (music.querySelector("source") && music.querySelector("source").getAttribute("src") === "StayWithMe.mp3") {
+ if (music.querySelector("source") && music.querySelector("source").getAttribute("src") === "BeautifulInWhite.mp3") {
   music.play().then(() => {
     musicLabel.textContent = "Jeda Musik";
   }).catch(() => {});
