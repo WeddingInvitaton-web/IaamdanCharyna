@@ -20,10 +20,11 @@ openButton.addEventListener("click", async () => {
   document.body.classList.remove("locked");
 
   try {
+    music.volume = 0.7;
     await music.play();
     musicLabel.textContent = "Jeda Musik";
   } catch (error) {
-    console.error("Gagal memutar musik:", error);
+    console.error("Musik gagal diputar:", error);
     musicLabel.textContent = "Putar Musik";
   }
 });
