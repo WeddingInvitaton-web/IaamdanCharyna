@@ -5,7 +5,7 @@
   3) Tempel URL Web App Google Apps Script di APPS_SCRIPT_URL setelah menyiapkannya.
 */
 const WEDDING_DATE = "2026-11-19T08:00:00+07:00";
-const APPS_SCRIPT_URL = ""; // Contoh: https://script.google.com/macros/s/ID_DEPLOYMENT/exec
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_6e3eDXnSvPgF3HPiJo6XxJ5JINJlx45Y6ce6b8PqzuP1vd8cjrHqZ2eeJH39RKJi1g/exec"; // Contoh: https://script.google.com/macros/s/ID_DEPLOYMENT/exec
 
 const intro = document.getElementById("intro");
 const openButton = document.getElementById("openInvitation");
