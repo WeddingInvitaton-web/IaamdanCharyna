@@ -94,7 +94,7 @@ async function sendToSheet(payload, messageEl) {
       body: new URLSearchParams(payload)
     });
 
-    messageEl.textContent = "Kiriman telah dikirim. Periksa Google Sheets untuk memastikan data tersimpan.";
+    messageEl.textContent = "Terima Kasih.";
     return true;
   } catch (error) {
     messageEl.textContent = "Pengiriman gagal. Silakan coba lagi.";
