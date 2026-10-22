@@ -77,23 +77,27 @@ document.getElementById("copyAccount").addEventListener("click", async () => {
   }
 });
 
+
 async function sendToSheet(payload, messageEl) {
   if (!APPS_SCRIPT_URL) {
-    messageEl.textContent = "Formulir belum terhubung. Pemilik template perlu mengatur APPS_SCRIPT_URL di script.js.";
+    messageEl.textContent = "Formulir belum terhubung.";
     return false;
   }
+
   try {
-    // no-cors dipakai karena endpoint Apps Script menerima kiriman formulir lintas domain.
     await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
-      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      },
       body: new URLSearchParams(payload)
     });
-    messageEl.textContent = "Terima kasih! Kiriman Anda sudah dikirim.";
+
+    messageEl.textContent = "Kiriman telah dikirim. Periksa Google Sheets untuk memastikan data tersimpan.";
     return true;
   } catch (error) {
-    messageEl.textContent = "Pengiriman gagal. Periksa koneksi internet lalu coba lagi.";
+    messageEl.textContent = "Pengiriman gagal. Silakan coba lagi.";
     return false;
   }
 }
