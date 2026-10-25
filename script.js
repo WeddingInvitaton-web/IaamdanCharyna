@@ -147,3 +147,17 @@ document.getElementById("wishForm").addEventListener("submit", async (event) => 
     form.reset();
   }
 });
+
+// Mengambil nama tamu dari parameter URL
+const params = new URLSearchParams(window.location.search);
+const namaTamu = params.get("to");
+
+// Menampilkan nama tamu pada halaman undangan
+const elemenNamaTamu = document.getElementById("namaTamu");
+
+if (elemenNamaTamu) {
+    elemenNamaTamu.textContent =
+        namaTamu && namaTamu.trim()
+            ? namaTamu.trim()
+            : "Bapak/Ibu/Saudara/i";
+}
