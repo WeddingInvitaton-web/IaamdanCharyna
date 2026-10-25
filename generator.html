@@ -1,1 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generator Link Undangan</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #5a1028;
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 550px;
+      margin: 40px auto;
+      background: white;
+      color: #5a1028;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px #0003;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 26px;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #d9b875;
+      color: #4b1023;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .hasil {
+      margin-top: 25px;
+      padding: 15px;
+      background: #fff8e8;
+      border-radius: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    #linkHasil {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .petunjuk {
+      font-size: 13px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Generator Link Undangan</h1>
+
+    <p style="text-align:center">
+      Iaam & Charyna<br>
+      Buat link undangan khusus untuk setiap tamu.
+    </p>
+
+    <label for="namaTamu">Nama Penerima Undangan</label>
+
+    <input
+      type="text"
+      id="namaTamu"
+      placeholder="Contoh: Karang Taruna B2C"
+      maxlength="100"
+    >
+
+    <button onclick="buatLink()">Buat Link Undangan</button>
+
+    <div class="hasil" id="hasil" hidden>
+      <strong>Link undangan:</strong>
+
+      <p id="linkHasil"></p>
+
+      <button onclick="salinLink()">Salin Link</button>
+
+      <button onclick="kirimWhatsApp()">
+        Kirim via WhatsApp
+      </button>
+    </div>
+
+    <p class="petunjuk">
+      Masukkan nama tamu, lalu buat link khusus untuk dibagikan.
+    </p>
+  </div>
+
+  <script>
+    let linkUndangan = "";
+
+    function buatLink() {
+      const nama = document.getElementById("namaTamu")
+        .value.trim();
+
+      if (!nama) {
+        alert("Silakan masukkan nama penerima undangan.");
+        return;
+      }
+
+      const alamatUndangan =
+        "https://weddinginvitaton-web.github.io/IaamdanCharyna/";
+
+      linkUndangan = alamatUndangan + "?to=" +
+  encodeURIComponent(nama).replace(/%20/g, "+");
+
+      document.getElementById("linkHasil").textContent =
+        linkUndangan;
+
+      document.getElementById("hasil").hidden = false;
+    }
+
+    async function salinLink() {
+      try {
+        await navigator.clipboard.writeText(linkUndangan);
+        alert("Link undangan berhasil disalin!");
+      } catch (error) {
+        window.prompt("Salin link berikut:", linkUndangan);
+      }
+    }
+
+    function kirimWhatsApp() {
+      const nama = document.getElementById("namaTamu")
+        .value.trim();
+
+      const pesan =
+        "Yth. " + nama +
+        ", kami mengundang Anda untuk hadir di acara pernikahan " +
+        "Iaam & Charyna.\n\n" +
+        "Silakan buka undangan berikut:\n" +
+        linkUndangan;
+
+      const urlWhatsApp =
+        "https://wa.me/?text=" + encodeURIComponent(pesan);
+
+      window.open(urlWhatsApp, "_blank");
+    }
+  </script>
+
+</body>
+</html>
