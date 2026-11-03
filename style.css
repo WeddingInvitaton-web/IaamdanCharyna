@@ -175,13 +175,29 @@ textarea { resize: vertical; }
   overflow-wrap: anywhere;
 }
 
+.qris-card {
+  margin-top: 30px;
+  text-align: center;
+}
+
 .qris-image {
+  background: #fff;
+  padding: 15px;
+  width: 240px;
+  max-width: 85%;
+  margin: 20px auto;
+  border-radius: 4px;
+}
+
+.qris-image img {
   display: block;
   width: 100%;
-  max-width: 260px;
   height: auto;
-  margin: 25px auto;
-  padding: 10px;
-  background: #ffffff;
-  border-radius: 8px;
+}
+
+.qris-note {
+  max-width: 450px;
+  margin: 15px auto 0;
+  line-height: 1.7;
+  font-size: 13px;
 }
