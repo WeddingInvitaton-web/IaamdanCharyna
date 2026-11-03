@@ -174,3 +174,14 @@ textarea { resize: vertical; }
   color: #ffffff;
   overflow-wrap: anywhere;
 }
+
+.qris-image {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin: 25px auto;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 8px;
+}
