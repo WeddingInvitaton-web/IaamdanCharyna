@@ -107,7 +107,37 @@ textarea { resize: vertical; }
 .form-message { font-size: .8rem; min-height: 1.2em; margin: 12px 0 0; color: var(--wine); }
 .wishes-section { background: var(--paper); }
 .wish-form { max-width: 620px; margin: 28px auto; text-align: left; }
-.wish-list { max-width: 620px; margin: 24px auto 0; text-align: left; }
+.wish-list {
+  max-width: 620px;
+  max-height: 350px;
+  margin: 24px auto 0;
+  text-align: left;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 10px 0 0;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #d8b875 #fbf7f0;
+}
+
+/* Tampilan scrollbar */
+.wish-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wish-list::-webkit-scrollbar-track {
+  background: #fbf7f0;
+  border-radius: 10px;
+}
+
+.wish-list::-webkit-scrollbar-thumb {
+  background: #d8b875;
+  border-radius: 10px;
+}
+
+.wish-list::-webkit-scrollbar-thumb:hover {
+  background: #76213b;
+}
 .wish-entry { background: var(--cream); border-left: 2px solid var(--gold); padding: 16px 18px; margin-bottom: 12px; }
 .wish-entry strong { font: 600 1.25rem var(--serif); color: var(--burgundy); }
 .wish-entry p { margin: 5px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .9rem; }
