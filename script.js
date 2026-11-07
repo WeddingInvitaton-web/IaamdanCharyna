@@ -102,6 +102,71 @@ async function sendToSheet(payload, messageEl) {
   }
 }
 
+// MENGAMBIL UCAPAN DARI GOOGLE SHEETS
+function loadWishes() {
+  const wishList = document.getElementById("wishList");
+
+  if (!wishList) return;
+
+  const callbackName =
+    "roundWishes_" + Date.now() + "_" +
+    Math.random().toString(36).slice(2);
+
+  const script = document.createElement("script");
+
+  const cleanup = () => {
+    delete window[callbackName];
+    script.remove();
+  };
+
+  window[callbackName] = function(result) {
+    cleanup();
+
+    if (!result || !result.success) {
+      wishList.textContent =
+        "Ucapan belum dapat dimuat. Silakan coba lagi.";
+      return;
+    }
+
+    wishList.replaceChildren();
+
+    if (!result.wishes || result.wishes.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "empty-wishes";
+      empty.textContent = "Belum ada ucapan. Jadilah yang pertama mengirim doa!";
+      wishList.appendChild(empty);
+      return;
+    }
+
+    result.wishes.forEach(item => {
+      const entry = document.createElement("article");
+      entry.className = "wish-entry";
+
+      const title = document.createElement("strong");
+      title.textContent = item.name;
+
+      const paragraph = document.createElement("p");
+      paragraph.textContent = item.message;
+
+      entry.append(title, paragraph);
+      wishList.appendChild(entry);
+    });
+  };
+
+  script.onerror = () => {
+    cleanup();
+    wishList.textContent =
+      "Gagal memuat ucapan. Silakan muat ulang halaman.";
+  };
+
+  script.src =
+    APPS_SCRIPT_URL +
+    "?callback=" + encodeURIComponent(callbackName) +
+    "&_=" + Date.now();
+
+  document.body.appendChild(script);
+}
+
 document.getElementById("rsvpForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = event.currentTarget;
@@ -118,35 +183,35 @@ document.getElementById("rsvpForm").addEventListener("submit", async (event) => 
   if (APPS_SCRIPT_URL) form.reset();
 });
 
+
 document.getElementById("wishForm").addEventListener("submit", async (event) => {
   event.preventDefault();
+
   const form = event.currentTarget;
   const message = document.getElementById("wishMessage");
+
   const name = document.getElementById("wishName").value.trim();
   const wish = document.getElementById("wishText").value.trim();
+
   if (!name || !wish) return;
-  message.textContent = "Mengirim...";
+
+  message.textContent = "Mengirim ucapan...";
+
   const ok = await sendToSheet({
     type: "wish",
-    name,
+    name: name,
     message: wish,
     timestamp: new Date().toISOString()
   }, message);
+
   if (ok) {
-    // Tampilan lokal untuk pengirim saat ini; daftar lintas perangkat memerlukan endpoint baca data.
-    const empty = document.querySelector(".empty-wishes");
-    if (empty) empty.remove();
-    const entry = document.createElement("article");
-    entry.className = "wish-entry";
-    const title = document.createElement("strong");
-    title.textContent = name;
-    const paragraph = document.createElement("p");
-    paragraph.textContent = wish;
-    entry.append(title, paragraph);
-    document.getElementById("wishList").prepend(entry);
     form.reset();
+    message.textContent = "Terima kasih! Memuat ucapan...";
+
+    loadWishes();
   }
 });
+
 
 const params = new URLSearchParams(window.location.search);
 const namaTamu = params.get("to");
@@ -159,3 +224,5 @@ if (elemenNamaTamu) {
       ? namaTamu.trim()
       : "Bapak/Ibu/Saudara/i";
 }
+
+loadWishes();
